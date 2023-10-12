@@ -630,6 +630,12 @@ class NetworkServiceExport(ResourceExport):
 
     This checks if the address has a interface suffix and then provides the
     neccessary proxy information.
+    If suffix is present all characters after suffix will be treated as proxy address.
+    
+    Example.
+       192.168.0.10%10.0.0.1, 10.0.0.1 is the proxy.
+       10.15.10.1%some-hostname-address.domain.com, some-hostname-address.domain.com is
+       the proxy.
     """
 
     def __attrs_post_init__(self):
@@ -638,6 +644,8 @@ class NetworkServiceExport(ResourceExport):
         self.data['cls'] = "NetworkService"
         self.local = NetworkService(target=None, name=None, **self.local_params)
         if '%' in self.local_params['address']:
+            self.proxy = self.local_params['address'].split('%')[1]
+            self.local_params['address'] = self.local_params['address'].split('%')[0]
             self.proxy_required = True
 
     def _get_params(self):
