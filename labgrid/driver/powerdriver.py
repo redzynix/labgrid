@@ -282,6 +282,8 @@ class YKUSHPowerDriver(Driver, PowerResetMixin, PowerProtocol):
             self.tool = self.target.env.config.get_tool('ykushcmd') or 'ykushcmd'
         else:
             self.tool = 'ykushcmd'
+        if self.port.ykush3:
+            self.tool = f'{self.tool} ykush3'
 
     @Driver.check_active
     @step()
