@@ -11,10 +11,12 @@ class YKUSHPowerPort(Resource):
 
     Args:
         serial (str): serial of the YKUSH device
-        index (int): port index"""
+        index (int): port index
+        version (str): ykush version ykush, ykush3 and ykushxs are supported"""
     serial = attr.ib(validator=attr.validators.instance_of(str))
-    index = attr.ib(validator=attr.validators.instance_of(int),
-                    converter=int)
+    index = attr.ib(validator=attr.validators.instance_of(str),
+                    converter=str)
+    version = attr.ib(default='ykush', validator=attr.validators.instance_of(str))
 
 @target_factory.reg_resource
 @attr.s(eq=False)
@@ -23,7 +25,9 @@ class NetworkYKUSHPowerPort(NetworkResource):
 
     Args:
         serial (str): serial of the YKUSH device
-        index (int): port index"""
+        index (int): port index
+        version (str): ykush version ykush, ykush3 and ykushxs are supported"""
     serial = attr.ib(validator=attr.validators.instance_of(str))
-    index = attr.ib(validator=attr.validators.instance_of(int),
-                    converter=int)
+    index = attr.ib(validator=attr.validators.instance_of(str),
+                    converter=str)
+    version = attr.ib(default='ykush', validator=attr.validators.instance_of(str))

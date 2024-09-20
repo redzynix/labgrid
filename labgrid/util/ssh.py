@@ -439,7 +439,7 @@ class SSHConnection:
             "-o", "ControlMaster=yes",
             "-o", f"ControlPath={control}",
             # We don't want to ask the user to confirm host keys here.
-            "-o", "StrictHostKeyChecking=yes",
+            "-o", "StrictHostKeyChecking=no",
             self.host,
         ]
 

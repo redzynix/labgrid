@@ -282,6 +282,11 @@ class YKUSHPowerDriver(Driver, PowerResetMixin, PowerProtocol):
             self.tool = self.target.env.config.get_tool('ykushcmd') or 'ykushcmd'
         else:
             self.tool = 'ykushcmd'
+        if self.port.version != 'ykush':
+            if self.port.version == 'ykush3' or self.port.version == 'ykushxs':
+                self.tool = f'{self.tool} {self.port.version}'
+            else:
+                raise ExecutionError(f'Unsupported ykush version provided: {self.port.version}')
 
     @Driver.check_active
     @step()
@@ -324,6 +329,11 @@ class YKUSHPowerDriver(Driver, PowerResetMixin, PowerProtocol):
         # cmd: ykushcmd -g 1
         # output: Downstream port 1 is ON/OFF
         check_str = "Downstream port {port} is {status}"
+        if self.port.index == 'a':
+            if self.port.version == 'ykush':
+                check_str = "Downstream port 15 is {status}"
+            if self.port.version == 'ykush3':
+                check_str = "Downstream port 0 is {status}"
         if check_str.format(port=self.port.index, status="ON") in res:
             return True
         if check_str.format(port=self.port.index, status="OFF") in res:
