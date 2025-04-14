@@ -15,6 +15,8 @@ class YKUSHPowerPort(Resource):
     serial = attr.ib(validator=attr.validators.instance_of(str))
     index = attr.ib(validator=attr.validators.instance_of(int),
                     converter=int)
+    ykush3 = attr.ib(default=False, validator=attr.validators.instance_of(bool),
+                    converter=bool)
 
 @target_factory.reg_resource
 @attr.s(eq=False)
@@ -27,3 +29,5 @@ class NetworkYKUSHPowerPort(NetworkResource):
     serial = attr.ib(validator=attr.validators.instance_of(str))
     index = attr.ib(validator=attr.validators.instance_of(int),
                     converter=int)
+    ykush3 = attr.ib(default=False, validator=attr.validators.instance_of(bool),
+                    converter=bool)
